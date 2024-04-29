@@ -3,169 +3,15 @@
  * @see https://v0.dev/t/G0MaaL8SWAR
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
-// import { button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/Button"
 // import { TableCell, TableRow, TableBody, Table } from "@/components/ui/table"
 // import { input } from "@/components/ui/input"
 
-import { Button, Input } from "antd";
-
-export default function Component() {
-  return (
-    <div className="bg-[#f8f9fa] min-h-screen w-[100%]">
-      <main className="p-4">
-        <section className="mb-8 w-[50%]">
-          <div className="flex items-center justify-between p-4 bg-white">
-            <div className="flex items-center space-x-2">
-              <div className="text-lg font-bold">블로그 주소</div>
-              <Input className="text-sm" />
-            </div>
-            <Button >확인</Button>
-          </div>
-        </section>
-        <section className="mb-8">
-          <div className="flex items-center justify-between p-4 bg-white">
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <div className="text-lg font-bold">블로그 지수</div>
-                <InfoIcon className="h-4 w-4 text-[#6c757d]" />
-              </div>
-              <button className="bg-[#007bff] text-white">Level 4</button>
-              <div className="flex items-center justify-between">
-                <div className="text-sm">오늘 방문자</div>
-                <div className="text-sm font-bold">29</div>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-lg font-bold">안테나 미션</div>
-              <div className="flex items-center justify-between">
-                <div className="text-sm">오늘 방문자</div>
-                <div className="text-sm font-bold">29</div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="text-sm">전체 방문자</div>
-                <div className="text-sm font-bold">43,737</div>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <img
-                alt="Advertisement"
-                className="aspect-[2/1]"
-                height="100"
-                src="/placeholder.svg"
-                width="200"
-              />
-            </div>
-          </div>
-        </section>
-        <section className="mb-8">
-          <div className="flex items-center justify-between p-4 bg-white">
-            <div className="flex items-center space-x-2">
-              <FlameIcon className="h-6 w-6 text-[#dc3545]" />
-              <div className="text-lg font-bold">최근 포스트</div>
-            </div>
-            <button className="bg-[#007bff] text-white">더 보기</button>
-          </div>
-          {/* <div className="bg-white">
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell className="font-medium">1개월 전</TableCell>
-                  <TableCell>
-                    [솔리드원칙] 첫번째, 단일책임원칙, 그리고 스프링프레임워크를 통한 패턴과 원칙 파헤치는 솔리드원칙
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">1개월 전</TableCell>
-                  <TableCell>이 한달한 체험 사서, 악기까지 적극적으로 해볼만한 이유 - 비즈니스 셀프 출판</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">1개월 전</TableCell>
-                  <TableCell>
-                    [솔리드원칙] 객체지향의 자유 2탄 블로그 포스팅 어렵지 않은데 왜? 모두 SNS 1000만명 데뷔
-                    도전중소프트웨어라치지 않아도 된다
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div> */}
-        </section>
-        <section>
-          <div className="flex items-center justify-between p-4 bg-white">
-            <div className="flex items-center space-x-2">
-              <BarChartIcon className="h-6 w-6 text-[#dc3545]" />
-              <div className="text-lg font-bold">지수</div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <button className="bg-[#007bff] text-white">대표 공감</button>
-              <button className="bg-[#007bff] text-white">사진</button>
-              <button className="bg-[#007bff] text-white">생활</button>
-            </div>
-            <div className="flex items-center space-x-2">
-              <input placeholder="Search" />
-              <button className="bg-[#007bff] text-white">
-                <SearchIcon className="text-white" />
-              </button>
-            </div>
-          </div>
-          {/* <div className="bg-white">
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell className="font-medium">0.93</TableCell>
-                  <TableCell>10</TableCell>
-                  <TableCell>22</TableCell>
-                  <TableCell>25</TableCell>
-                  <TableCell>
-                    <button className="bg-[#007bff] text-white">Q</button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">0.49</TableCell>
-                  <TableCell>3</TableCell>
-                  <TableCell>26</TableCell>
-                  <TableCell>1</TableCell>
-                  <TableCell>
-                    <button className="bg-[#007bff] text-white">Q</button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">0.84</TableCell>
-                  <TableCell>13</TableCell>
-                  <TableCell>35</TableCell>
-                  <TableCell>5</TableCell>
-                  <TableCell>
-                    <button className="bg-[#007bff] text-white">Q</button>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div> */}
-        </section>
-      </main>
-    </div>
-  );
-}
-
-function BarChartIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="12" x2="12" y1="20" y2="10" />
-      <line x1="18" x2="18" y1="20" y2="4" />
-      <line x1="6" x2="6" y1="20" y2="16" />
-    </svg>
-  );
-}
+import React, { useRef, useState } from "react";
+import { Button, Input, Modal, Spin } from "antd";
+import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
+import { List, Space } from "antd";
+import axios from "axios";
 
 function FlameIcon(props) {
   return (
@@ -186,43 +32,320 @@ function FlameIcon(props) {
   );
 }
 
-function InfoIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 16v-4" />
-      <path d="M12 8h.01" />
-    </svg>
-  );
-}
+export default function Component() {
+  const addressRef = useRef();
+  const [user, setUser] = useState();
+  const [videos, setVideos] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-function SearchIcon(props) {
+  const IconText = ({ icon, text }) => (
+    <Space>
+      {React.createElement(icon)}
+      {text}
+    </Space>
+  );
+
+  function getChannelIdFromUrl(channelUrl) {
+    if (channelUrl.includes("channel/")) {
+      return channelUrl.split("channel/")[1];
+    } else {
+      throw new Error("Invalid channel URL provided.");
+    }
+  }
+
+  // Example function to make an API call with the extracted channel ID
+  const fetchChannelDetails = async (channelUrl) => {
+    try {
+      let nextPageToken = "";
+      const videoDetails = [];
+      const channelId = getChannelIdFromUrl(channelUrl);
+      // Replace 'YOUR_API_KEY_HERE' with your actual YouTube Data API v3 key
+      const apiKey = "AIzaSyCnqNweuZd37APrxuoQMmfIL7ORJduK9zU";
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${channelId}&key=${apiKey}`;
+
+      const response = await axios.get(url);
+
+      console.log("response.data", response.data.items);
+
+      if (!response.data?.items) {
+        return false;
+      }
+
+      do {
+        try {
+          const { data } = await axios.get(
+            `https://www.googleapis.com/youtube/v3/search`,
+            {
+              params: {
+                channelId,
+                part: "id,snippet",
+                maxResults: 50,
+                pageToken: nextPageToken,
+                key: apiKey
+              }
+            }
+          );
+
+          for (const item of data.items) {
+            if (item.id.kind === "youtube#video") {
+              const videoId = item.id.videoId;
+              const videoData = await axios.get(
+                `https://www.googleapis.com/youtube/v3/videos`,
+                {
+                  params: {
+                    id: videoId,
+                    part: "snippet,contentDetails,statistics",
+                    key: apiKey
+                  }
+                }
+              );
+
+              const video = videoData.data.items[0];
+              const subscribers =
+                response.data.items[0].statistics.subscriberCount;
+              videoDetails.push({
+                title: video.snippet.title,
+                owner: video.snippet.channelTitle,
+                subscribers: subscribers,
+                views: video.statistics.viewCount,
+                viewScore: subscribers
+                  ? parseFloat(video.statistics.viewCount) /
+                    parseFloat(subscribers)
+                  : "알수없음",
+                likes: video.statistics.likeCount,
+                comments: video.statistics.commentCount,
+                thumbnails: video.snippet.thumbnails.high.url,
+                duration: video.contentDetails.duration,
+                keywords: video.snippet.tags || [],
+                keywordCnt: video.snippet.tags ? video.snippet.tags.length : 0
+              });
+            }
+          }
+
+          nextPageToken = data.nextPageToken;
+        } catch (error) {
+          console.error("Error listing videos:", error);
+          break;
+        }
+      } while (nextPageToken);
+      return { userData: response.data, videoData: videoDetails };
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error(error.response.data);
+        console.error(error.response.status);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error", error.message);
+      }
+    }
+  };
+
+  // const listAllVideos = async (channelId) => {
+  //   let nextPageToken = "";
+  //   const videoDetails = [];
+  //   const subscribers = await getChannelDetails(channelId);
+
+  //   return videoDetails;
+  // };
+
   return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
+    <div className="bg-[#f8f9fa] min-h-screen w-[100%]">
+        <Spin tip="로딩 중..." size="large" spinning={isLoading} className="absolute top-6">
+        <main className="p-4 pr-6">
+          <section className="mb-8 w-[100%] rounded-md">
+            <div className="items-center p-4 bg-white">
+              <div className="text-sm flex-3 mb-2">
+                유튜브 주소를 입력해주세요
+              </div>
+              <div className="flex items-center w-[50%] space-x-2 mr-2">
+                <Input className="flex-1" ref={addressRef} />
+                <Button
+                  disabled={user}
+                  onClick={async () => {
+                    setIsLoading(true);
+                    const address = addressRef.current.input.value;
+                    const result = await fetchChannelDetails(address);
+                    console.log("result", result);
+                    if (!result) {
+                      alert("알수없는 아이디");
+                      setIsLoading(false);
+                      return;
+                    }
+                    const userData = result.userData;
+                    const videoData = result.videoData;
+                    const user = {
+                      title: userData.items[0].snippet.localized.title,
+                      thumbnails: userData.items[0].snippet.thumbnails.high.url,
+                      description:
+                        userData.items[0].snippet.localized.description,
+                      subscriberCount:
+                        userData.items[0].statistics.subscriberCount,
+                      videoCount: userData.items[0].statistics.videoCount,
+                      viewCount: userData.items[0].statistics.viewCount
+                    };
+                    setUser(user);
+                    setVideos(videoData);
+                    setIsLoading(false);
+                  }}
+                >
+                  확인
+                </Button>
+                <Button disabled={!user} onClick={() => setUser(undefined)}>
+                  재입력
+                </Button>
+              </div>
+            </div>
+          </section>
+          {user && (
+            <>
+              <section className="mb-8 rounded-lg flex gap-3">
+                <div className="flex items-center justify-between p-4 flex-1 bg-white">
+                  <div className="space-y-2">
+                    {/* <div className="flex items-center space-x-2">
+                <div className="text-lg font-bold">유튜브 정보</div>
+                <InfoIcon className="h-4 w-4 text-[#6c757d]" />
+              </div> */}
+                    {/* <img src="" alt="profile" /> */}
+                    <div className="text-lg font-bold">{user.title}</div>
+                    <img
+                      className="rounded-md"
+                      width={248}
+                      alt="logo"
+                      src={user.thumbnails}
+                    />
+                    <div className="text-sm">
+                      <div className="text-sm font-bold mb-2">채널 설명</div>
+                      {user.description}
+                    </div>
+                    <hr />
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm">구독자 수</div>
+                      <div className="text-sm font-bold">
+                        {user.subscriberCount}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm">업로드 영상 개수</div>
+                      <div className="text-sm font-bold">{user.videoCount}</div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm">총 조회수</div>
+                      <div className="text-sm font-bold">{user.viewCount}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-4 flex-1 bg-white">
+                  <div className="space-y-2">
+                    {/* <div className="flex items-center space-x-2">
+                <div className="text-lg font-bold">유튜브 정보</div>
+                <InfoIcon className="h-4 w-4 text-[#6c757d]" />
+              </div> */}
+                    <img src="" alt="profile" />
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm">Subscribers</div>
+                      <div className="text-sm font-bold">29</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section className="mb-8 bg-white">
+                <div className="flex items-center justify-between p-4 bg-white">
+                  <div className="flex items-center space-x-2">
+                    <FlameIcon className="h-6 w-6 text-[#dc3545]" />
+                    <div className="text-lg font-bold">최근 포스트</div>
+                  </div>
+                  <hr />
+                  {/* <Button className="bg-[#007bff] text-white">더 보기</Button> */}
+                </div>
+                <List
+                  itemLayout="vertical"
+                  size="large"
+                  pagination={{
+                    onChange: (page) => {
+                      console.log(page);
+                    },
+                    pageSize: 3
+                  }}
+                  dataSource={videos}
+                  // footer={
+                  // <div>
+                  //   <b>ant design</b> footer part
+                  // </div>
+                  // }
+                  renderItem={(item) => (
+                    <List.Item
+                      key={item.title}
+                      actions={[
+                        <IconText
+                          icon={LikeOutlined}
+                          text={item.likes}
+                          key="list-vertical-like-o"
+                        />,
+                        <IconText
+                          icon={MessageOutlined}
+                          text={item.comments}
+                          key="list-vertical-message"
+                        />,
+                        <IconText
+                          icon={MessageOutlined}
+                          text={item.viewScore}
+                          key="list-vertical-message"
+                        />
+                      ]}
+                      extra={
+                        <img width={272} alt="thumnail" src={item.thumbnails} />
+                      }
+                    >
+                      <List.Item.Meta
+                        // avatar={<Avatar src={item.avatar} />}
+                        title={<a href={item.href}>{item.title}</a>}
+                        description={item.description}
+                      />
+                      <div>
+                        <div>관련 키워드</div>
+                        <div className="flex gap-2 flex-wrap">
+                          {item.keywords.map((val, idx) => {
+                            return (
+                              <Button
+                                onClick={(e) => {
+                                  setIsModalOpen(true);
+                                  console.log(val);
+                                }}
+                              >
+                                {val}
+                              </Button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </List.Item>
+                  )}
+                />
+              </section>
+              <Modal
+                title="Basic Modal"
+                open={isModalOpen}
+                onOk={() => {
+                  setIsModalOpen(false);
+                }}
+                onCancel={() => {
+                  setIsModalOpen(false);
+                }}
+              >
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+              </Modal>
+            </>
+          )}
+        </main>
+    </Spin>
+      </div>
   );
 }
