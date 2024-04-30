@@ -9,7 +9,13 @@
 
 import React, { useRef, useState } from "react";
 import { Button, Input, Modal, Spin } from "antd";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
+import {
+  BarChartOutlined,
+  FieldTimeOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  StarOutlined
+} from "@ant-design/icons";
 import { List, Space } from "antd";
 import axios from "axios";
 
@@ -34,6 +40,7 @@ function FlameIcon(props) {
 
 export default function Component() {
   const addressRef = useRef();
+  const apiKey = "AIzaSyCnqNweuZd37APrxuoQMmfIL7ORJduK9zU";
   const [user, setUser] = useState();
   const [videos, setVideos] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,19 +61,41 @@ export default function Component() {
     }
   }
 
+  const getChannelIdFromName = async (channelName) => {
+    try {
+      const searchResponse = await axios.get(
+        "https://www.googleapis.com/youtube/v3/search",
+        {
+          params: {
+            q: channelName,
+            type: "channel",
+            part: "id,snippet",
+            key: apiKey
+          }
+        }
+      );
+
+      if (!searchResponse.data.items.length) {
+        console.log("Channel not found.");
+        return;
+      }
+      const channelId = searchResponse.data.items[0].id.channelId;
+      const ownerName = searchResponse.data.items[0].snippet.channelTitle;
+      return channelId;
+    } catch (error) {
+      console.error("Error fetching channel details:", error);
+    }
+  };
   // Example function to make an API call with the extracted channel ID
-  const fetchChannelDetails = async (channelUrl) => {
+  const fetchChannelDetails = async (channelName) => {
     try {
       let nextPageToken = "";
       const videoDetails = [];
-      const channelId = getChannelIdFromUrl(channelUrl);
+      //   const channelId = getChannelIdFromUrl(channelName);
+      const channelId = await getChannelIdFromName(channelName);
       // Replace 'YOUR_API_KEY_HERE' with your actual YouTube Data API v3 key
-      const apiKey = "AIzaSyCnqNweuZd37APrxuoQMmfIL7ORJduK9zU";
       const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${channelId}&key=${apiKey}`;
-
       const response = await axios.get(url);
-
-      console.log("response.data", response.data.items);
 
       if (!response.data?.items) {
         return false;
@@ -106,6 +135,7 @@ export default function Component() {
                 response.data.items[0].statistics.subscriberCount;
               videoDetails.push({
                 title: video.snippet.title,
+                description: video.snippet.description,
                 owner: video.snippet.channelTitle,
                 subscribers: subscribers,
                 views: video.statistics.viewCount,
@@ -117,6 +147,8 @@ export default function Component() {
                 comments: video.statistics.commentCount,
                 thumbnails: video.snippet.thumbnails.high.url,
                 duration: video.contentDetails.duration,
+                publishedAt: video.snippet.publishedAt,
+                publishDate: new Date(video.snippet.publishedAt),
                 keywords: video.snippet.tags || [],
                 keywordCnt: video.snippet.tags ? video.snippet.tags.length : 0
               });
@@ -129,7 +161,14 @@ export default function Component() {
           break;
         }
       } while (nextPageToken);
-      return { userData: response.data, videoData: videoDetails };
+
+      const sortedVideData = videoDetails.sort((a, b) => {
+        const dateA = new Date(a.publishedAt);
+        const dateB = new Date(b.publishedAt);
+        return dateB - dateA;
+      });
+      console.log("videoDetails", sortedVideData);
+      return { userData: response.data, videoData: sortedVideData };
     } catch (error) {
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -146,22 +185,19 @@ export default function Component() {
     }
   };
 
-  // const listAllVideos = async (channelId) => {
-  //   let nextPageToken = "";
-  //   const videoDetails = [];
-  //   const subscribers = await getChannelDetails(channelId);
-
-  //   return videoDetails;
-  // };
-
   return (
     <div className="bg-[#f8f9fa] min-h-screen w-[100%]">
-        <Spin tip="로딩 중..." size="large" spinning={isLoading} className="absolute top-6">
+      <Spin
+        tip="로딩 중..."
+        size="large"
+        spinning={isLoading}
+        className="absolute top-6"
+      >
         <main className="p-4 pr-6">
           <section className="mb-8 w-[100%] rounded-md">
             <div className="items-center p-4 bg-white">
               <div className="text-sm flex-3 mb-2">
-                유튜브 주소를 입력해주세요
+                유튜브 채널명을 입력해주세요
               </div>
               <div className="flex items-center w-[50%] space-x-2 mr-2">
                 <Input className="flex-1" ref={addressRef} />
@@ -170,10 +206,14 @@ export default function Component() {
                   onClick={async () => {
                     setIsLoading(true);
                     const address = addressRef.current.input.value;
+                    if (!address) {
+                      alert("채널명을 입력해주세요");
+                      setIsLoading(false);
+                      return;
+                    }
                     const result = await fetchChannelDetails(address);
-                    console.log("result", result);
                     if (!result) {
-                      alert("알수없는 아이디");
+                      alert("채널명이 존재하지 않습니다.");
                       setIsLoading(false);
                       return;
                     }
@@ -182,8 +222,7 @@ export default function Component() {
                     const user = {
                       title: userData.items[0].snippet.localized.title,
                       thumbnails: userData.items[0].snippet.thumbnails.high.url,
-                      description:
-                        userData.items[0].snippet.localized.description,
+                      description: userData.items[0].snippet.description,
                       subscriberCount:
                         userData.items[0].statistics.subscriberCount,
                       videoCount: userData.items[0].statistics.videoCount,
@@ -227,16 +266,20 @@ export default function Component() {
                     <div className="flex items-center justify-between">
                       <div className="text-sm">구독자 수</div>
                       <div className="text-sm font-bold">
-                        {user.subscriberCount}
+                        {user.subscriberCount.toLocaleString()}
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="text-sm">업로드 영상 개수</div>
-                      <div className="text-sm font-bold">{user.videoCount}</div>
+                      <div className="text-sm font-bold">
+                        {user.videoCount.toLocaleString()}
+                      </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="text-sm">총 조회수</div>
-                      <div className="text-sm font-bold">{user.viewCount}</div>
+                      <div className="text-sm font-bold">
+                        {user.viewCount.toLocaleString()}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -264,6 +307,7 @@ export default function Component() {
                   {/* <Button className="bg-[#007bff] text-white">더 보기</Button> */}
                 </div>
                 <List
+                className="p-6"
                   itemLayout="vertical"
                   size="large"
                   pagination={{
@@ -293,13 +337,25 @@ export default function Component() {
                           key="list-vertical-message"
                         />,
                         <IconText
-                          icon={MessageOutlined}
-                          text={item.viewScore}
+                          icon={BarChartOutlined}
+                          text={item.viewScore.toFixed(2)}
+                          key="list-vertical-message"
+                        />,
+                        <IconText
+                          icon={FieldTimeOutlined}
+                          text={item.publishedAt
+                            .replace("T", " ")
+                            .replace("Z", "")}
                           key="list-vertical-message"
                         />
                       ]}
                       extra={
-                        <img width={272} alt="thumnail" src={item.thumbnails} />
+                        <img
+                          width={272}
+                          alt="thumnail"
+                          src={item.thumbnails}
+                          className="rounded-md"
+                        />
                       }
                     >
                       <List.Item.Meta
@@ -307,6 +363,7 @@ export default function Component() {
                         title={<a href={item.href}>{item.title}</a>}
                         description={item.description}
                       />
+                      {/* <div>{item?.description}</div> */}
                       <div>
                         <div>관련 키워드</div>
                         <div className="flex gap-2 flex-wrap">
@@ -345,7 +402,7 @@ export default function Component() {
             </>
           )}
         </main>
-    </Spin>
-      </div>
+      </Spin>
+    </div>
   );
 }

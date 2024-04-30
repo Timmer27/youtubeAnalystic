@@ -5,10 +5,9 @@ import Component from "./Component";
 function App() {
   return (
     <div>
-      <div>nav bar</div>
-
+      <div className="p-6 border bg-slate-300">상단 메뉴</div>
       <div className="flex">
-        <div>sidebar</div>
+        <div className="w-16 p-6 border">사이드 메뉴</div>
         <Component />
       </div>
     </div>
